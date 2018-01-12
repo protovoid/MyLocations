@@ -67,6 +67,16 @@ class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate
     // Dispose of any resources that can be recreated.
   }
   
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    navigationController?.isNavigationBarHidden = true
+  }
+  
+  override func viewWillDisappear(_ animated: Bool) {
+    super.viewWillDisappear(animated)
+    navigationController?.isNavigationBarHidden = false
+  }
+  
   
   // MARK: - CLLocationManagerDelegate
   func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
@@ -77,7 +87,6 @@ class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate
     }
     
     lastLocationError = error
-    
     stopLocationManager()
     updateLabels()
   }
@@ -104,24 +113,22 @@ class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate
     if location == nil || location!.horizontalAccuracy > newLocation.horizontalAccuracy {
       lastLocationError = nil
       location = newLocation
-    }
-    
-    if newLocation.horizontalAccuracy <= locationManager.desiredAccuracy {
-      print("*** We're done!")
-      stopLocationManager()
-      
-      if distance > 0 {
-        performingReverseGeocoding = false
+      if newLocation.horizontalAccuracy <= locationManager.desiredAccuracy {
+        print("*** We're done!")
+        stopLocationManager()
+        
+        if distance > 0 {
+          performingReverseGeocoding = false
+        }
       }
-    }
-    updateLabels()
-    
-    if !performingReverseGeocoding {
-      print("*** Going to geocode")
+      updateLabels()
       
-      performingReverseGeocoding = true
-      
-      geocoder.reverseGeocodeLocation(newLocation, completionHandler: {
+      if !performingReverseGeocoding {
+        print("*** Going to geocode")
+        
+        performingReverseGeocoding = true
+        
+        geocoder.reverseGeocodeLocation(newLocation, completionHandler: {
           placemarks, error in
           self.lastGeoCodingError = error
           if error == nil, let p = placemarks, !p.isEmpty {
@@ -129,10 +136,10 @@ class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate
           } else {
             self.placemark = nil
           }
-      })
-      
-      self.performingReverseGeocoding = false
-      self.updateLabels()
+          self.performingReverseGeocoding = false
+          self.updateLabels()
+        })
+    }
     } else if distance < 1 { // if coord from this reading not significantly different than previous reading...
       let timeInterval = newLocation.timestamp.timeIntervalSince(location!.timestamp)
       if timeInterval > 10 { // ...and it has been over 10 seconds since original reading
@@ -255,6 +262,15 @@ class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate
       stopLocationManager()
       lastLocationError = NSError(domain: "MyLocationsErrorDomain", code: 1, userInfo: nil)
       updateLabels()
+    }
+  }
+  
+  // MARK:- Navigation
+  override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    if segue.identifier == "TagLocation" {
+      let controller = segue.destination as! LocationDetailsViewController
+      controller.coordinate = location!.coordinate
+      controller.placemark = placemark
     }
   }
 
