@@ -98,7 +98,7 @@
         <scene sceneID="Ozd-oQ-eWy">
             <objects>
                 <tableViewController id="JF3-TE-SbT" customClass="LocationDetailsViewController" customModule="MyLocations" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="QcK-pP-Fl5">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" dataMode="static" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="QcK-pP-Fl5">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
@@ -278,7 +278,18 @@
                             <outlet property="delegate" destination="JF3-TE-SbT" id="eL6-su-xPn"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Tag Location" id="XFw-r9-9vm"/>
+                    <navigationItem key="navigationItem" title="Tag Location" id="XFw-r9-9vm">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="bMC-1O-dYT">
+                            <connections>
+                                <action selector="cancel" destination="JF3-TE-SbT" id="Yp1-DF-SKT"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="done" id="cyY-9a-m3r">
+                            <connections>
+                                <action selector="done" destination="JF3-TE-SbT" id="Dyc-A5-NIq"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="addressLabel" destination="ulP-S1-YaQ" id="2uz-1v-0xT"/>
                         <outlet property="categoryLabel" destination="buj-lL-aOr" id="OI2-df-CNo"/>
