@@ -22,6 +22,8 @@
 		63593784200FD50800AAAADC /* Location+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63593782200FD50800AAAADC /* Location+CoreDataProperties.swift */; };
 		63F6687120127F120015795F /* LocationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F6687020127F120015795F /* LocationsViewController.swift */; };
 		63F66875201287390015795F /* LocationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F66874201287390015795F /* LocationCell.swift */; };
+		63F668782013D8360015795F /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63F668772013D8360015795F /* MapKit.framework */; };
+		63F6687A2013D88D0015795F /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F668792013D88D0015795F /* MapViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +44,8 @@
 		63593782200FD50800AAAADC /* Location+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Location+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		63F6687020127F120015795F /* LocationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationsViewController.swift; sourceTree = "<group>"; };
 		63F66874201287390015795F /* LocationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationCell.swift; sourceTree = "<group>"; };
+		63F668772013D8360015795F /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		63F668792013D88D0015795F /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -49,6 +53,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				63F668782013D8360015795F /* MapKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -62,6 +67,7 @@
 				63593782200FD50800AAAADC /* Location+CoreDataProperties.swift */,
 				6357643C200054E600DE5188 /* MyLocations */,
 				6357643B200054E600DE5188 /* Products */,
+				63F668762013D8360015795F /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -77,7 +83,6 @@
 			isa = PBXGroup;
 			children = (
 				6357643D200054E600DE5188 /* AppDelegate.swift */,
-				63F66874201287390015795F /* LocationCell.swift */,
 				63576446200054E600DE5188 /* Assets.xcassets */,
 				635937782009594700AAAADC /* CategoryPickerViewController.swift */,
 				6357643F200054E600DE5188 /* CurrentLocationViewController.swift */,
@@ -86,12 +91,22 @@
 				6359377A200EA7B600AAAADC /* HudView.swift */,
 				6357644B200054E600DE5188 /* Info.plist */,
 				63576448200054E600DE5188 /* LaunchScreen.storyboard */,
+				63F66874201287390015795F /* LocationCell.swift */,
 				635937762009436600AAAADC /* LocationsDetailsViewController.swift */,
 				63F6687020127F120015795F /* LocationsViewController.swift */,
 				63576443200054E600DE5188 /* Main.storyboard */,
+				63F668792013D88D0015795F /* MapViewController.swift */,
 				63576441200054E600DE5188 /* SecondViewController.swift */,
 			);
 			path = MyLocations;
+			sourceTree = "<group>";
+		};
+		63F668762013D8360015795F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				63F668772013D8360015795F /* MapKit.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -127,6 +142,11 @@
 					63576439200054E600DE5188 = {
 						CreatedOnToolsVersion = 9.2;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.Maps.iOS = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -172,6 +192,7 @@
 				6359377B200EA7B600AAAADC /* HudView.swift in Sources */,
 				63F66875201287390015795F /* LocationCell.swift in Sources */,
 				63F6687120127F120015795F /* LocationsViewController.swift in Sources */,
+				63F6687A2013D88D0015795F /* MapViewController.swift in Sources */,
 				63593784200FD50800AAAADC /* Location+CoreDataProperties.swift in Sources */,
 				6359377D200EB43C00AAAADC /* Functions.swift in Sources */,
 				6357643E200054E600DE5188 /* AppDelegate.swift in Sources */,

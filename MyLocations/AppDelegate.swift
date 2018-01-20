@@ -38,6 +38,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       navController = tabViewControllers[1] as! UINavigationController
       let controller2 = navController.viewControllers.first as! LocationsViewController
       controller2.managedObjectContext = managedObjectContext
+      // third tab
+      navController = tabViewControllers[2] as! UINavigationController
+      let controller3 = navController.viewControllers.first as! MapViewController
+      controller3.managedObjectContext = managedObjectContext
       
       // force LocationsViewController to load its view at launch so refreshed with latest Core Data data
       let _ = controller2.view
