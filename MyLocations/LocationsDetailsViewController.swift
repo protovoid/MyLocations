@@ -24,6 +24,9 @@ class LocationDetailsViewController: UITableViewController {
   @IBOutlet weak var longitudeLabel: UILabel!
   @IBOutlet weak var addressLabel: UILabel!
   @IBOutlet weak var dateLabel: UILabel!
+  @IBOutlet weak var imageView: UIImageView!
+  @IBOutlet weak var addPhotoLabel: UILabel!
+  
   
   
   // MARK:- Actions
@@ -75,6 +78,8 @@ class LocationDetailsViewController: UITableViewController {
   var categoryName = "No Category"
   var managedObjectContext: NSManagedObjectContext!
   var date = Date()
+  var descriptionText = ""
+  var image: UIImage?
   
   var locationToEdit: Location? {
     didSet {
@@ -88,7 +93,7 @@ class LocationDetailsViewController: UITableViewController {
     }
   }
   
-  var descriptionText = ""
+  
   
   // MARK:- Overrides
   override func viewDidLoad() {
@@ -157,16 +162,29 @@ class LocationDetailsViewController: UITableViewController {
     descriptionTextView.resignFirstResponder()
   }
   
+  func show(image: UIImage) {
+    imageView.image = image
+    imageView.isHidden = false
+    imageView.frame = CGRect(x: 10, y: 10, width: 260, height: 260)
+    addPhotoLabel.isHidden = true
+  }
+  
   // MARK:- TableView Delegates
   override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-    if indexPath.section == 0 && indexPath.row == 0 {
+    switch (indexPath.section, indexPath.row) {
+    case (0, 0):
       return 88
-    } else if indexPath.section == 2 && indexPath.row == 2 {
-      addressLabel.frame.size = CGSize(width: view.bounds.size.width - 120, height: 10000)
+      
+    case (1, _):
+      return imageView.isHidden ? 44 : 280
+      
+    case (2, 2):
+      addressLabel.frame.size = CGSize(width: view.bounds.size.width - 115, height: 10000)
       addressLabel.sizeToFit()
-      addressLabel.frame.origin.x = view.bounds.size.width - addressLabel.frame.size.width - 16
+      addressLabel.frame.origin.x = view.bounds.size.width - addressLabel.frame.size.width - 15
       return addressLabel.frame.size.height + 20
-    } else {
+      
+    default:
       return 44
     }
   }
@@ -183,6 +201,9 @@ class LocationDetailsViewController: UITableViewController {
   override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     if indexPath.section == 0 && indexPath.row == 0 {
       descriptionTextView.becomeFirstResponder()
+    } else if indexPath.section == 1 && indexPath.row == 0 {
+      tableView.deselectRow(at: indexPath, animated: true)
+      pickPhoto()
     }
   }
   
@@ -195,4 +216,65 @@ class LocationDetailsViewController: UITableViewController {
     }
   }
   
+}
+
+extension LocationDetailsViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+  
+  func takePhotoWithCamera() {
+    let imagePicker = UIImagePickerController()
+    imagePicker.sourceType = .camera
+    imagePicker.delegate = self
+    imagePicker.allowsEditing = true
+    present(imagePicker, animated: true, completion: nil)
+  }
+  
+  func choosePhotoFromLibrary() {
+    let imagePicker = UIImagePickerController()
+    imagePicker.sourceType = .photoLibrary
+    imagePicker.delegate = self
+    imagePicker.allowsEditing = true
+    present(imagePicker, animated: true, completion: nil)
+  }
+  
+  func pickPhoto() {
+    if UIImagePickerController.isSourceTypeAvailable(.camera) {
+      showPhotoMenu()
+    } else {
+      choosePhotoFromLibrary()
+    }
+  }
+  
+  func showPhotoMenu() {
+    let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+    
+    let actCancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+    alert.addAction(actCancel)
+    
+    let actPhoto = UIAlertAction(title: "Take Photo", style: .default, handler: { _ in
+      self.takePhotoWithCamera()
+    })
+    alert.addAction(actPhoto)
+    
+    let actLibrary = UIAlertAction(title: "Choose From Library", style: .default, handler: { _ in
+      self.choosePhotoFromLibrary()
+    })
+    alert.addAction(actLibrary)
+    
+    present(alert, animated: true, completion: nil)
+  }
+  
+  // MARK:- Image Picker Delegates
+  func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+    image = info[UIImagePickerControllerEditedImage] as? UIImage
+    
+    if let theImage = image {
+      show(image: theImage)
+    }
+    tableView.reloadData()
+    dismiss(animated: true, completion: nil)
+  }
+  
+  func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+    dismiss(animated: true, completion: nil)
+  }
 }
