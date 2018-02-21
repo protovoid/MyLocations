@@ -186,12 +186,12 @@
                         <viewLayoutGuide key="safeArea" id="xPh-Gm-rGu"/>
                     </view>
                     <navigationItem key="navigationItem" title="Map" id="Leg-ZP-hYn">
-                        <barButtonItem key="leftBarButtonItem" title="Locations" image="Pin" id="Cgk-Nc-3gS">
+                        <barButtonItem key="leftBarButtonItem" image="Pin" id="Cgk-Nc-3gS">
                             <connections>
                                 <action selector="showLocations" destination="8Zu-3I-Pmv" id="7N6-Mi-FAz"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="User" image="User" id="Yeg-fg-n4e">
+                        <barButtonItem key="rightBarButtonItem" image="User" id="Yeg-fg-n4e">
                             <connections>
                                 <action selector="showUser" destination="8Zu-3I-Pmv" id="5w6-UZ-9rG"/>
                             </connections>
